@@ -8,12 +8,12 @@
 - https://github.com/Railgun-Privacy/circuits-ppoi/tree/main
 - https://ipfs-lb.com/ipfs/QmZrP9zaZw2LwErT2yA6VpMWm65UdToQiKj4DtStVsUJHr/
 
-### .zkey & matrices.bin
+### proving_key.bin & matrices.bin
 
-Circom's `read_zkey` fn is quite slow (upward of 3s in release mode) so I've pre-generated the zkey and matrices for easier use.
+Circom's `read_zkey` fn is quite slow (upward of 3s in release mode) so I've pre-generated the proving key and matrices for easier use.
 
 ```rust
-let zkey = ark_circom::ProvingKey<ark_bn254::Bn254>::deserialize_compressed(&mut R);
+let proving_key = ark_circom::ProvingKey<ark_bn254::Bn254>::deserialize_compressed(&mut R);
 let matrices = SerializableConstraintMatrices<ark_bn254::Fr>::deserialize_compressed;
 
 /// Serializable copy of `ConstraintMatrices<F>`
