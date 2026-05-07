@@ -13,8 +13,8 @@
 Circom's `read_zkey` fn is quite slow (upward of 3s in release mode) so I've pre-generated the proving key and matrices for easier use.
 
 ```rust
-let proving_key = ark_circom::ProvingKey<ark_bn254::Bn254>::deserialize_compressed(&mut R);
-let matrices = SerializableConstraintMatrices<ark_bn254::Fr>::deserialize_compressed;
+let proving_key = ark_circom::ProvingKey<ark_bn254::Bn254>::deserialize_uncompressed(&mut R);
+let matrices = SerializableConstraintMatrices<ark_bn254::Fr>::deserialize_uncompressed;
 
 /// Serializable copy of `ConstraintMatrices<F>`
 #[derive(Debug, Clone, CanonicalSerialize, CanonicalDeserialize)]
