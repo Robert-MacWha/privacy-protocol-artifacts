@@ -14,11 +14,11 @@ Circom's `read_zkey` fn is quite slow (upward of 3s in release mode) so I've pre
 
 ```rust
 let proving_key = ark_circom::ProvingKey<ark_bn254::Bn254>::deserialize_uncompressed(&mut R);
-let matrices = SerializableConstraintMatrices<ark_bn254::Fr>::deserialize_uncompressed;
+let matrices = SerializableNpIndex<ark_bn254::Fr>::deserialize_uncompressed;
 
-/// Serializable copy of `ConstraintMatrices<F>`
-#[derive(Debug, Clone, CanonicalSerialize, CanonicalDeserialize)]
-pub struct SerializableConstraintMatrices<F: Field> {
+/// Serializable copy of `SerializableNpIndex<F>`
+#[derive(Debug, Clone, PartialEq, Eq, CanonicalSerialize, CanonicalDeserialize)]
+pub struct SerializableNpIndex<F: Field> {
     /// The number of variables that are "public instances" to the constraint
     /// system.
     pub num_instance_variables: usize,
@@ -44,37 +44,4 @@ pub struct SerializableConstraintMatrices<F: Field> {
     /// `self.mode == SynthesisMode::Prove { construct_matrices = false }`.
     pub c: Matrix<F>,
 }
-
-impl<F: Field> From<ConstraintMatrices<F>> for SerializableConstraintMatrices<F> {
-    fn from(matrices: ConstraintMatrices<F>) -> Self {
-        Self {
-            num_instance_variables: matrices.num_instance_variables,
-            num_witness_variables: matrices.num_witness_variables,
-            num_constraints: matrices.num_constraints,
-            a_num_non_zero: matrices.a_num_non_zero,
-            b_num_non_zero: matrices.b_num_non_zero,
-            c_num_non_zero: matrices.c_num_non_zero,
-            a: matrices.a,
-            b: matrices.b,
-            c: matrices.c,
-        }
-    }
-}
-
-impl<F: Field> From<SerializableConstraintMatrices<F>> for ConstraintMatrices<F> {
-    fn from(matrices: SerializableConstraintMatrices<F>) -> Self {
-        Self {
-            num_instance_variables: matrices.num_instance_variables,
-            num_witness_variables: matrices.num_witness_variables,
-            num_constraints: matrices.num_constraints,
-            a_num_non_zero: matrices.a_num_non_zero,
-            b_num_non_zero: matrices.b_num_non_zero,
-            c_num_non_zero: matrices.c_num_non_zero,
-            a: matrices.a,
-            b: matrices.b,
-            c: matrices.c,
-        }
-    }
-}
-
 ```
